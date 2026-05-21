@@ -1,0 +1,23 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.log
+
+# Node
+node_modules/
+dist/
+
+# Maxfiy
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dizayn skrinshotlari (loyiha kodiga kirmaydi)
+/image.png
+/image copy.png
+/ui/

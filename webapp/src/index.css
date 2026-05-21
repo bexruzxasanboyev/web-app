@@ -1,0 +1,652 @@
+/* ===== Mavzu (qora + oltin) ===== */
+:root {
+  --bg: #0b0b0b;
+  --bg-elev: #141414;
+  --card: #1b1b1b;
+  --card-2: #262626;
+  --gold: #e3b341;
+  --gold-light: #f5d77a;
+  --gold-dark: #b8860b;
+  --gold-grad: linear-gradient(135deg, #f5d77a 0%, #d9a93a 52%, #b8860b 100%);
+  --text: #ffffff;
+  --text-dim: #9a9a9a;
+  --text-mute: #6a6a6a;
+  --border: rgba(227, 179, 65, 0.14);
+  --radius: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+img { display: block; max-width: 100%; }
+input { font-family: inherit; }
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* ===== Tartib ===== */
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100%;
+  background: var(--bg);
+  position: relative;
+}
+
+.page { padding: 0 16px 96px; }
+
+.page-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
+  padding: 15px 16px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.page-header h1 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  background: var(--gold-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== Pastki navigatsiya ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  justify-content: space-around;
+  background: var(--bg-elev);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
+  z-index: 30;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+  color: var(--text-mute);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.nav-item .nav-icon {
+  width: 40px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  transition: background 0.2s;
+}
+
+.nav-item.active { color: var(--gold); }
+.nav-item.active .nav-icon { background: rgba(227, 179, 65, 0.16); }
+
+/* ===== Qidiruv ===== */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--card);
+  border-radius: 24px;
+  padding: 12px 16px;
+  margin: 14px 0;
+}
+
+.search-bar svg { color: var(--text-mute); flex-shrink: 0; }
+
+.search-bar input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.search-bar input::placeholder { color: var(--text-mute); }
+
+/* ===== Banner karusel ===== */
+.carousel {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.4s ease;
+}
+
+.banner {
+  flex: 0 0 100%;
+  height: 178px;
+  position: relative;
+  background: linear-gradient(135deg, #36300f, #100f0a);
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 15px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 8%, rgba(0, 0, 0, 0) 62%);
+}
+
+.banner-overlay h3 { font-size: 17px; font-weight: 800; }
+.banner-overlay p { font-size: 12.5px; color: #cfcfcf; margin-top: 3px; }
+
+.banner-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--gold-grad);
+  color: #1a1200;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 13px;
+  right: 13px;
+  display: flex;
+  gap: 5px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transition: all 0.3s;
+}
+
+.dot.active {
+  background: var(--gold);
+  width: 17px;
+  border-radius: 3px;
+}
+
+/* ===== Taklif kartasi ===== */
+.invite-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(227, 179, 65, 0.13), rgba(227, 179, 65, 0.03));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin: 14px 0;
+}
+
+.invite-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(227, 179, 65, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.invite-text { flex: 1; font-weight: 700; font-size: 14px; }
+.invite-card .chev { color: var(--gold); }
+
+/* ===== Bo'lim sarlavhasi ===== */
+.section-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 13px;
+}
+
+.section-title-row h2 { font-size: 18px; font-weight: 800; }
+
+.count-badge {
+  background: var(--gold-grad);
+  color: #1a1200;
+  font-size: 12px;
+  font-weight: 800;
+  min-width: 24px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Bo'limlar gridi ===== */
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.section-card {
+  position: relative;
+  aspect-ratio: 1 / 0.94;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(150deg, #3c310f, #141414);
+}
+
+.section-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sc-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.05));
+}
+
+.sc-title { font-weight: 800; font-size: 14px; color: var(--gold-light); }
+
+.sc-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--gold-grad);
+  color: #1a1200;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ===== Darslik kartasi ===== */
+.lesson-card {
+  background: var(--card);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.lc-img {
+  height: 150px;
+  position: relative;
+  background: linear-gradient(135deg, #2c2510, #141414);
+}
+
+.lc-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.lc-new {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--gold-grad);
+  color: #1a1200;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.lc-body { padding: 12px 14px 14px; }
+.lc-title { font-weight: 700; font-size: 15px; line-height: 1.35; }
+.lc-date { color: var(--text-mute); font-size: 12px; margin-top: 6px; }
+
+/* ===== Darslik (to'liq) ===== */
+.detail-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 14px;
+}
+
+.detail-img {
+  position: relative;
+  min-height: 180px;
+  background: linear-gradient(135deg, #2c2510, #141414);
+}
+
+.detail-img img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.save-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: color 0.2s, transform 0.1s;
+}
+
+.save-btn:active { transform: scale(0.9); }
+.save-btn.saved { color: #ff4d6d; }
+
+.detail-body { padding: 16px; }
+
+.detail-body h2 {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+
+.detail-body p {
+  color: #d2d2d2;
+  line-height: 1.62;
+  font-size: 14.5px;
+  white-space: pre-wrap;
+}
+
+.warning-box {
+  background: rgba(227, 179, 65, 0.08);
+  border: 1px solid rgba(227, 179, 65, 0.22);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 14px 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #e8d9b0;
+}
+
+.warning-box svg { color: var(--gold); }
+
+.cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--gold-grad);
+  color: #1a1200;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 15px;
+  border-radius: 14px;
+  margin-top: 16px;
+}
+
+.cta-btn:active { transform: scale(0.99); }
+.detail-date { color: var(--text-mute); font-size: 12px; margin-top: 14px; }
+
+/* ===== FAQ ===== */
+.faq-head h2 {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-top: 10px;
+}
+
+.faq-head p {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin: 7px 0 18px;
+}
+
+.faq-item {
+  background: var(--card);
+  border-radius: 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  font-weight: 700;
+  font-size: 14.5px;
+}
+
+.faq-chev {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--card-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  transition: transform 0.25s;
+}
+
+.faq-item.open .faq-chev {
+  transform: rotate(180deg);
+  color: var(--gold);
+}
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 16px;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.6;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.open .faq-a { max-height: 420px; padding: 0 16px 16px; }
+
+/* ===== Holatlar (loader / bo'sh) ===== */
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 0;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(227, 179, 65, 0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 72px 28px;
+}
+
+.empty-icon { color: #444444; margin-bottom: 14px; }
+.empty h3 { font-size: 16px; font-weight: 700; }
+.empty p { color: var(--text-dim); font-size: 13.5px; margin-top: 6px; line-height: 1.5; }
+
+/* ===== Haqimizda ===== */
+.about-hero {
+  background: linear-gradient(160deg, #202020, #0d0d0d);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 14px 0;
+}
+
+.about-hero h2 { font-size: 22px; font-weight: 800; margin-top: 10px; }
+.about-hero p { color: var(--text-dim); font-size: 13px; margin-top: 4px; }
+
+.about-label {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  margin: 16px 4px 8px;
+}
+
+.about-list {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 4px 16px;
+}
+
+.about-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.about-row:last-child { border-bottom: none; }
+
+.ar-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(227, 179, 65, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.ar-title { font-weight: 700; font-size: 14.5px; }
+.ar-desc { color: var(--text-dim); font-size: 13px; margin-top: 3px; line-height: 1.45; }
+
+/* ===== Profil ===== */
+.profile-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 0 6px;
+}
+
+.avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: var(--gold-grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  font-weight: 800;
+  color: #1a1200;
+}
+
+.profile-top h2 { font-size: 20px; font-weight: 800; margin-top: 13px; }
+.profile-top .username { color: var(--gold); font-size: 13.5px; margin-top: 3px; }
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--gold-grad);
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 12px;
+  color: #1a1200;
+}
+
+.profile-card:active { transform: scale(0.99); }
+
+.pc-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pc-text { flex: 1; }
+.pc-title { font-weight: 800; font-size: 15px; line-height: 1.3; }
+.pc-sub { font-size: 13px; opacity: 0.72; margin-top: 2px; }
+
+/* ===== Umumiy ro'yxat qatori ===== */
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.list-row .lr-main { flex: 1; min-width: 0; }
+.list-row .lr-title { font-weight: 600; font-size: 14px; line-height: 1.35; }
+.list-row .lr-sub { color: var(--text-mute); font-size: 12px; margin-top: 3px; }
+.list-row .lr-sub.gold { color: var(--gold); }
+.list-row .lr-meta { color: var(--text-mute); font-size: 12px; flex-shrink: 0; }

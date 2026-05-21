@@ -1,0 +1,133 @@
+{
+  "_izoh": "Mini app kontenti. Tahrirlab 'python -m app.seed' bilan bazaga yuklang. Rasmlar uchun image_url ga to'liq havola yoki /images/... yo'lini yozing.",
+
+  "sections": [
+    { "key": "jonli-efir",     "title": "Jonli efir",          "image_url": null, "position": 1 },
+    { "key": "prisma-sotuv",   "title": "Prisma sotuv",        "image_url": null, "position": 2 },
+    { "key": "prisma-mark",    "title": "Prisma marketing",    "image_url": null, "position": 3 },
+    { "key": "prisma-tizim",   "title": "Prisma tizim",        "image_url": null, "position": 4 },
+    { "key": "shogirdlik",     "title": "Shogirdlik kurslari", "image_url": null, "position": 5 },
+    { "key": "biznes-goya",    "title": "Biznes g'oyalar",     "image_url": null, "position": 6 },
+    { "key": "shaxsiy",        "title": "Shaxsiy rivojlanish", "image_url": null, "position": 7 },
+    { "key": "moliya",         "title": "Moliyaviy savodxonlik","image_url": null, "position": 8 },
+    { "key": "onlayn-biznes",  "title": "Onlayn biznes",       "image_url": null, "position": 9 },
+    { "key": "networking",     "title": "Networking",          "image_url": null, "position": 10 }
+  ],
+
+  "lessons": [
+    {
+      "key": "razbor-1",
+      "section": "jonli-efir",
+      "title": "🔍 Biznesingizni tahlil qildirishga tayyormisiz?",
+      "image_url": null,
+      "body": "\"Prisma\" doirasida navbatdagi Razbor (Biznes-tahlil) sessiyasini o'tkazamiz! Jonli efirda biz anketada to'ldirgan javoblaringizga qarab biz sizni tanlaymiz.",
+      "warning": "Anketa qanchalik batafsil va aniq raqamlar bilan to'ldirilsa, tanlanish imkoniyati shunchalik yuqori bo'ladi.",
+      "video_url": null,
+      "cta_label": "🔗 Ro'yxatdan o'tish 🧮",
+      "cta_url": "https://t.me/prisma_uz_bot",
+      "is_new": true,
+      "position": 1,
+      "published_at": "2026-04-27"
+    },
+    {
+      "section": "jonli-efir",
+      "title": "Jonli efir: Savol-javob sessiyasi",
+      "image_url": null,
+      "body": "Har hafta o'tkaziladigan jonli efir. Savollaringizni oldindan yuborib qoldiring.",
+      "warning": null,
+      "is_new": false,
+      "position": 2,
+      "published_at": "2026-04-20"
+    },
+    {
+      "section": "prisma-sotuv",
+      "title": "Sotuvning 5 bosqichi",
+      "image_url": null,
+      "body": "Mijoz bilan birinchi aloqadan kelishuvgacha bo'lgan barcha bosqichlar.",
+      "warning": null,
+      "is_new": true,
+      "position": 1,
+      "published_at": "2026-05-10"
+    },
+    {
+      "section": "prisma-mark",
+      "title": "Marketing voronkasi nima?",
+      "image_url": null,
+      "body": "Marketing voronkasi qanday ishlaydi va uni qanday qurish kerak.",
+      "warning": null,
+      "is_new": false,
+      "position": 1,
+      "published_at": "2026-05-05"
+    },
+    {
+      "section": "prisma-tizim",
+      "title": "Biznesni avtomatlashtirish asoslari",
+      "image_url": null,
+      "body": "Prisma tizimini biznesingizga qanday joriy qilish mumkin.",
+      "warning": null,
+      "is_new": true,
+      "position": 1,
+      "published_at": "2026-05-15"
+    },
+    {
+      "section": "shogirdlik",
+      "title": "Shogirdlik dasturi haqida",
+      "image_url": null,
+      "body": "Shogirdlik kursida nimalarni o'rganasiz va u kim uchun.",
+      "warning": null,
+      "is_new": false,
+      "position": 1,
+      "published_at": "2026-04-28"
+    }
+  ],
+
+  "banners": [
+    {
+      "title": "Prisma tizimi",
+      "subtitle": "Biznesni avtomatlashtirish sirlari",
+      "image_url": null,
+      "badge_text": "YANGI",
+      "lesson": "razbor-1",
+      "position": 1
+    },
+    {
+      "title": "Sotuvni 2 barobar oshiring",
+      "subtitle": "Amaliy sotuv kurslari",
+      "image_url": null,
+      "badge_text": "TOP",
+      "lesson": null,
+      "position": 2
+    },
+    {
+      "title": "Jonli efirlar",
+      "subtitle": "Har hafta yangi bilim",
+      "image_url": null,
+      "badge_text": null,
+      "lesson": null,
+      "position": 3
+    }
+  ],
+
+  "faq": [
+    {
+      "question": "Prisma nima?",
+      "answer": "Prisma — biznes, marketing va shaxsiy rivojlanish bo'yicha video darslar va amaliy materiallar platformasi. Bu yerda siz biznesingizni avtomatlashtirish va rivojlantirish bo'yicha bilim olasiz."
+    },
+    {
+      "question": "Darsliklarni qanday ko'raman?",
+      "answer": "Bosh sahifadagi bo'limlardan birini tanlang, so'ng kerakli darslikni oching. Har bir darslikda matn, video va foydali havolalar bo'lishi mumkin."
+    },
+    {
+      "question": "Bildirishnomalarni qanday yoqaman?",
+      "answer": "Bot menyusidagi \"🔔 Bildirishnoma\" tugmasini bosing va holatni \"Yoqilgan\" qilib qo'ying. Shunda yangi darsliklar qo'shilganda xabar olasiz."
+    },
+    {
+      "question": "Darsliklarni saqlash mumkinmi?",
+      "answer": "Ha. Darslikni ochib, yurak (💗) belgisini bosing. Saqlangan darsliklar \"Saqlangan\" bo'limida to'planadi."
+    },
+    {
+      "question": "Yangi darsliklar qachon qo'shiladi?",
+      "answer": "Yangi darsliklar muntazam ravishda qo'shib boriladi. Bildirishnomani yoqib qo'ysangiz, har bir yangilikdan birinchi bo'lib xabardor bo'lasiz."
+    }
+  ]
+}

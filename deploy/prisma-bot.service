@@ -1,0 +1,14 @@
+[Unit]
+Description=Prisma Telegram Bot (aiogram)
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=prisma
+WorkingDirectory=/var/www/prisma/backend
+ExecStart=/var/www/prisma/backend/.venv/bin/python -m app.bot.main
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
