@@ -27,5 +27,10 @@ class Settings(BaseSettings):
     # Adminlar
     admin_ids: list[int] = []
 
+    # Test rejimi: Telegram'siz (brauzerda) ham ishlashga ruxsat beradi —
+    # initData bo'lmasa standart "Test Admin" foydalanuvchi ishlatiladi.
+    # Loyiha to'liq ishga tushganda False qiling.
+    dev_auth_bypass: bool = False
+
 
 settings = Settings()  # type: ignore[call-arg]

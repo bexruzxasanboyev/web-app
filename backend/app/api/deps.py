@@ -12,37 +12,49 @@ from app.models.user import User
 
 logger = logging.getLogger(__name__)
 
+# Test/dev rejimi uchun standart "admin" foydalanuvchi
+_TEST_USER = {
+    "id": 1,
+    "first_name": "Test",
+    "last_name": "Admin",
+    "username": "test_admin",
+    "language_code": "uz",
+}
 
-async def get_init_data(authorization: str = Header(default="")) -> dict:
-    """`Authorization: tma <initData>` sarlavhasini tekshiradi."""
+
+def _extract_tg_user(authorization: str) -> dict | None:
+    """`Authorization: tma <initData>` dan Telegram foydalanuvchisini ajratadi.
+
+    Sarlavha yo'q yoki yaroqsiz bo'lsa None qaytaradi (xato ko'tarmaydi).
+    """
     scheme, _, init_data = authorization.partition(" ")
     if scheme.lower() != "tma" or not init_data:
-        logger.warning("initData rad etildi: Authorization sarlavhasi yo'q")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Ilova faqat Telegram orqali ochilishi kerak",
-        )
+        return None
     try:
-        return validate_init_data(init_data, settings.bot_token)
+        parsed = validate_init_data(init_data, settings.bot_token)
     except InitDataError as exc:
         logger.warning("initData rad etildi: %s", exc)
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=str(exc),
-        ) from exc
+        return None
+    return parsed.get("user")
 
 
 async def get_current_user(
-    init_data: dict = Depends(get_init_data),
+    authorization: str = Header(default=""),
     session: AsyncSession = Depends(get_session),
 ) -> User:
-    """initData'dagi foydalanuvchini bazadan oladi yoki yaratadi."""
-    tg_user = init_data.get("user")
-    if not tg_user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="initData ichida foydalanuvchi ma'lumoti yo'q",
-        )
+    """Joriy foydalanuvchini aniqlaydi (kerak bo'lsa bazada yaratadi)."""
+    tg_user = _extract_tg_user(authorization)
+    is_test = False
+
+    if tg_user is None:
+        if not settings.dev_auth_bypass:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Ilova faqat Telegram orqali ochilishi kerak",
+            )
+        # Test rejimi — standart admin bilan ishlaymiz
+        tg_user = _TEST_USER
+        is_test = True
 
     result = await session.execute(
         select(User).where(User.telegram_id == tg_user["id"])
@@ -55,7 +67,7 @@ async def get_current_user(
             first_name=tg_user.get("first_name"),
             last_name=tg_user.get("last_name"),
             language_code=tg_user.get("language_code"),
-            is_admin=tg_user["id"] in settings.admin_ids,
+            is_admin=is_test or (tg_user["id"] in settings.admin_ids),
         )
         session.add(user)
         await session.commit()
