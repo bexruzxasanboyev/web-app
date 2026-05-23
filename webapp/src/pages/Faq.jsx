@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
-import { Loader } from '../components/States.jsx'
+import { FaqSkeleton } from '../components/Skeletons.jsx'
 import { api } from '../api/client.js'
 
 export default function Faq() {
@@ -21,7 +21,7 @@ export default function Faq() {
           <p>Quyida eng ko'p beriladigan savollarga javoblar</p>
         </div>
 
-        {!items && <Loader />}
+        {!items && <FaqSkeleton />}
         {items &&
           items.map((item) => (
             <div

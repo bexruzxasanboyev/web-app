@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronRight, Clock, Users } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
-import { Loader } from '../components/States.jsx'
+import { ProfileSkeleton } from '../components/Skeletons.jsx'
 import { api } from '../api/client.js'
 import { getTgUser } from '../hooks/useTelegram.js'
 
@@ -32,7 +32,7 @@ export default function Profile() {
           {username && <div className="username">@{username}</div>}
         </div>
 
-        {!data && <Loader />}
+        {!data && <ProfileSkeleton />}
         {data && (
           <>
             <div className="profile-card" onClick={() => navigate('/recent')}>

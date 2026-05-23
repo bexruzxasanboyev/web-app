@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Users } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
-import { EmptyState, Loader } from '../components/States.jsx'
+import { EmptyState } from '../components/States.jsx'
+import { ListRowSkeleton } from '../components/Skeletons.jsx'
 import { api } from '../api/client.js'
 import { formatDate } from '../utils.js'
 
@@ -16,7 +17,7 @@ export default function Referrals() {
     <>
       <PageHeader title="Taklif qilingan do'stlar" />
       <div className="page">
-        {!items && <Loader />}
+        {!items && <ListRowSkeleton />}
         {items && items.length === 0 && (
           <EmptyState
             icon={Users}

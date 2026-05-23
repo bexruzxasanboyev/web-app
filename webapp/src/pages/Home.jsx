@@ -4,7 +4,8 @@ import { ChevronRight, Search as SearchIcon, Users } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
 import BannerCarousel from '../components/BannerCarousel.jsx'
 import SectionCard from '../components/SectionCard.jsx'
-import { EmptyState, Loader } from '../components/States.jsx'
+import { EmptyState } from '../components/States.jsx'
+import { HomeSkeleton } from '../components/Skeletons.jsx'
 import { api } from '../api/client.js'
 import { haptic, shareReferral } from '../hooks/useTelegram.js'
 
@@ -28,17 +29,18 @@ export default function Home() {
     <>
       <PageHeader title="Prisma" />
       <div className="page">
-        <form className="search-bar" onSubmit={onSearch}>
-          <SearchIcon size={18} />
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Qidirish..."
-          />
-        </form>
-
         {error && <EmptyState title="Xatolik yuz berdi" text={error} />}
-        {!data && !error && <Loader />}
+        {!data && !error && <HomeSkeleton />}
+        {data && (
+          <form className="search-bar" onSubmit={onSearch}>
+            <SearchIcon size={18} />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Qidirish..."
+            />
+          </form>
+        )}
 
         {data && (
           <>
@@ -63,8 +65,8 @@ export default function Home() {
               <span className="count-badge">{data.section_count}</span>
             </div>
             <div className="section-grid">
-              {data.sections.map((section) => (
-                <SectionCard key={section.id} section={section} />
+              {data.sections.map((section, i) => (
+                <SectionCard key={section.id} section={section} index={i} />
               ))}
             </div>
           </>

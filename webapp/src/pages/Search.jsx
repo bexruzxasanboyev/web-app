@@ -3,7 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 import { Search as SearchIcon, SearchX } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
 import LessonCard from '../components/LessonCard.jsx'
-import { EmptyState, Loader } from '../components/States.jsx'
+import { EmptyState } from '../components/States.jsx'
+import { LessonListSkeleton } from '../components/Skeletons.jsx'
 import { api } from '../api/client.js'
 
 export default function Search() {
@@ -46,7 +47,7 @@ export default function Search() {
           />
         </form>
 
-        {loading && <Loader />}
+        {loading && <LessonListSkeleton count={3} />}
         {!loading && results.length === 0 && (
           <EmptyState
             icon={SearchX}

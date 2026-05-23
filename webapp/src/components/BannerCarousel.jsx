@@ -36,24 +36,27 @@ export default function BannerCarousel({ banners }) {
         className="carousel-track"
         style={{ transform: `translateX(-${index * 100}%)` }}
       >
-        {banners.map((banner) => (
-          <div
-            key={banner.id}
-            className="banner"
-            onClick={() =>
-              banner.lesson_id && navigate(`/lessons/${banner.lesson_id}`)
-            }
-          >
-            {banner.image_url && <img src={banner.image_url} alt="" />}
-            {banner.badge_text && (
-              <span className="banner-badge">🔥 {banner.badge_text}</span>
-            )}
-            <div className="banner-overlay">
-              <h3>{banner.title}</h3>
-              {banner.subtitle && <p>{banner.subtitle}</p>}
+        {banners.map((banner) => {
+          const isExpert = banner.image_url?.includes('expert')
+          return (
+            <div
+              key={banner.id}
+              className={'banner' + (isExpert ? ' banner-expert' : '')}
+              onClick={() =>
+                banner.lesson_id && navigate(`/lessons/${banner.lesson_id}`)
+              }
+            >
+              {banner.image_url && <img src={banner.image_url} alt="" />}
+              {banner.badge_text && (
+                <span className="banner-badge">{banner.badge_text}</span>
+              )}
+              <div className="banner-overlay">
+                <h3>{banner.title}</h3>
+                {banner.subtitle && <p>{banner.subtitle}</p>}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
       {banners.length > 1 && (
         <div className="carousel-dots">

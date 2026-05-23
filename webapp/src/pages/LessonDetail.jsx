@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { AlertTriangle, ExternalLink, Heart } from 'lucide-react'
+import { AlertTriangle, Heart, Play } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
-import { EmptyState, Loader } from '../components/States.jsx'
+import { EmptyState } from '../components/States.jsx'
+import { LessonDetailSkeleton } from '../components/Skeletons.jsx'
 import { api } from '../api/client.js'
 import { formatDate } from '../utils.js'
 import { haptic, openLink } from '../hooks/useTelegram.js'
+
+const MENTOR_DEFAULT = 'Prisma jamoasi'
 
 export default function LessonDetail() {
   const { id } = useParams()
@@ -45,27 +48,64 @@ export default function LessonDetail() {
     }
   }
 
+  const mentor = lesson?.mentor || MENTOR_DEFAULT
+  const ctaUrl = lesson?.video_url || lesson?.cta_url
+  const ctaLabel = lesson?.video_url ? 'Tomosha qilish' : (lesson?.cta_label || 'Tomosha qilish')
+
   return (
     <>
-      <PageHeader title="Prisma" />
+      <PageHeader title="Darslik" back />
       <div className="page">
         {error && <EmptyState title="Xatolik" text={error} />}
-        {!lesson && !error && <Loader />}
+        {!lesson && !error && <LessonDetailSkeleton />}
         {lesson && (
-          <div className="detail-card">
-            <div className="detail-img">
-              {lesson.image_url && <img src={lesson.image_url} alt="" />}
-              <button
-                className={'save-btn' + (saved ? ' saved' : '')}
-                onClick={toggleSave}
-                aria-label="Saqlash"
-              >
-                <Heart size={20} fill={saved ? 'currentColor' : 'none'} />
-              </button>
+          <>
+            <div className="dl-hero">
+              {lesson.image_url ? (
+                <img src={lesson.image_url} alt="" />
+              ) : (
+                <div className="dl-hero-placeholder">
+                  <svg viewBox="0 0 120 130" className="dl-hero-diamond">
+                    <defs>
+                      <linearGradient id="dlhG" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#fff6d8" />
+                        <stop offset="50%" stopColor="#f5d77a" />
+                        <stop offset="100%" stopColor="#b8860b" />
+                      </linearGradient>
+                    </defs>
+                    <polygon points="30,6 90,6 112,40 8,40" fill="url(#dlhG)" />
+                    <polygon points="8,40 112,40 60,126" fill="url(#dlhG)" opacity="0.85" />
+                    <line x1="30" y1="6" x2="60" y2="40" stroke="rgba(255,255,255,0.4)" strokeWidth="0.5" />
+                    <line x1="90" y1="6" x2="60" y2="40" stroke="rgba(255,255,255,0.4)" strokeWidth="0.5" />
+                    <line x1="8" y1="40" x2="60" y2="126" stroke="rgba(0,0,0,0.25)" strokeWidth="0.5" />
+                    <line x1="112" y1="40" x2="60" y2="126" stroke="rgba(0,0,0,0.25)" strokeWidth="0.5" />
+                  </svg>
+                </div>
+              )}
+              <span className="dl-shimmer" aria-hidden="true" />
             </div>
-            <div className="detail-body">
-              <h2>{lesson.title}</h2>
-              {lesson.body && <p>{lesson.body}</p>}
+
+            <div className="dl-body">
+              {lesson.section_title && (
+                <div className="dl-label">{lesson.section_title.toUpperCase()}</div>
+              )}
+
+              <div className="dl-title-row">
+                <h2>{lesson.title}</h2>
+                <button
+                  className={'save-pill' + (saved ? ' saved' : '')}
+                  onClick={toggleSave}
+                  aria-label="Saqlash"
+                >
+                  <Heart size={14} fill={saved ? 'currentColor' : 'none'} />
+                  <span>{saved ? 'Saqlandi' : 'Saqlash'}</span>
+                </button>
+              </div>
+
+              <div className="dl-label">DARSLIK HAQIDA</div>
+              <div className="dl-mentor">Mentor: {mentor}</div>
+
+              {lesson.body && <p className="dl-text">{lesson.body}</p>}
 
               {lesson.warning && (
                 <div className="warning-box">
@@ -77,13 +117,13 @@ export default function LessonDetail() {
                 </div>
               )}
 
-              {lesson.cta_url && (
+              {ctaUrl && (
                 <button
-                  className="cta-btn"
-                  onClick={() => openLink(lesson.cta_url)}
+                  className="watch-btn"
+                  onClick={() => openLink(ctaUrl)}
                 >
-                  {lesson.cta_label || "Havolaga o'tish"}
-                  <ExternalLink size={17} />
+                  <Play size={16} fill="currentColor" />
+                  <span>{ctaLabel}</span>
                 </button>
               )}
 
@@ -93,7 +133,7 @@ export default function LessonDetail() {
                 </div>
               )}
             </div>
-          </div>
+          </>
         )}
       </div>
     </>

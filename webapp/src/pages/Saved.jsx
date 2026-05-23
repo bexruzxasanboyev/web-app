@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { Heart } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
 import LessonCard from '../components/LessonCard.jsx'
-import { EmptyState, Loader } from '../components/States.jsx'
+import { EmptyState } from '../components/States.jsx'
+import { LessonListSkeleton } from '../components/Skeletons.jsx'
 import { api } from '../api/client.js'
 
 export default function Saved() {
@@ -16,7 +17,7 @@ export default function Saved() {
     <>
       <PageHeader title="Saqlangan" />
       <div className="page">
-        {!items && <Loader />}
+        {!items && <LessonListSkeleton />}
         {items && items.length === 0 && (
           <EmptyState
             icon={Heart}
