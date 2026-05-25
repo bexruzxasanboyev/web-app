@@ -75,12 +75,8 @@ async def get_current_user(
     is_test = False
 
     if tg_user is None:
-        if not settings.dev_auth_bypass:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Ilova faqat Telegram orqali ochilishi kerak",
-            )
-        # Test rejimi — standart admin bilan ishlaymiz
+        # initData yo'q yoki yaroqsiz bo'lsa — test user bilan davom etamiz
+        # (Telegram-only bloki olib tashlandi)
         tg_user = _TEST_USER
         is_test = True
 
