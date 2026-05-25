@@ -13,7 +13,6 @@ import Referrals from './pages/Referrals.jsx'
 import Payment from './pages/Payment.jsx'
 import PaymentPlan from './pages/PaymentPlan.jsx'
 import PaymentConfirm from './pages/PaymentConfirm.jsx'
-
 export default function App() {
   return (
     <Routes>
