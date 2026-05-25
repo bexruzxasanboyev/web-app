@@ -111,9 +111,9 @@ export default function PaymentConfirm() {
           <div className="pay-success">
             <span className="pay-success-icon"><CheckCircle2 size={42} /></span>
             <h2>Obuna faollashdi</h2>
-            <p>To'lov muvaffaqiyatli tasdiqlandi.</p>
-            <button className="watch-btn" onClick={() => navigate(`/${userId}`)}>
-              Obuna sahifasiga qaytish
+            <p>To'lov muvaffaqiyatli tasdiqlandi. Darsliklarga to'liq kirish ochildi.</p>
+            <button className="watch-btn" onClick={() => navigate('/')}>
+              Darsliklarga o'tish
             </button>
           </div>
         </div>
