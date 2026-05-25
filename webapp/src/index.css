@@ -1376,6 +1376,14 @@ button {
   flex-shrink: 0;
 }
 
+.plan-ext {
+  color: var(--gold);
+  margin-left: 10px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.plan-card:disabled { opacity: 0.5; cursor: not-allowed; }
+
 .pay-note {
   display: flex; align-items: center; gap: 6px;
   color: var(--text-mute); font-size: 12px;
