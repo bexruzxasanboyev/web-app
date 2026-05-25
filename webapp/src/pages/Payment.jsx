@@ -1,12 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import {
-  CheckCircle2,
-  ChevronRight,
-  History,
-  Lock,
-  ShieldCheck,
-} from 'lucide-react'
+import { CheckCircle2, ChevronRight, Lock, ShieldCheck } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
 import { EmptyState } from '../components/States.jsx'
 import { payApi } from '../api/payClient.js'
@@ -57,7 +51,7 @@ export default function Payment() {
   if (loading) {
     return (
       <>
-        <PageHeader title="Obuna" back />
+        <PageHeader title="Obuna" />
         <div className="page"><div className="loader"><span className="spinner" /></div></div>
       </>
     )
@@ -66,7 +60,7 @@ export default function Payment() {
   if (error) {
     return (
       <>
-        <PageHeader title="Obuna" back />
+        <PageHeader title="Obuna" />
         <div className="page"><EmptyState title="Xatolik" text={error} /></div>
       </>
     )
@@ -153,13 +147,6 @@ export default function Payment() {
           </>
         )}
 
-        {isActive && (user?.payments?.length ?? 0) > 0 && (
-          <button className="pay-menu-card" onClick={() => navigate(`/${userId}/history`)}>
-            <span className="pmc-icon"><History size={18} /></span>
-            <span className="pmc-text">To'lovlar tarixi</span>
-            <ChevronRight size={18} className="pmc-arrow" />
-          </button>
-        )}
       </div>
     </>
   )
