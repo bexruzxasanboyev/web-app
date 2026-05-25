@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { CreditCard, ShieldCheck } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
 import { EmptyState } from '../components/States.jsx'
-import { api } from '../api/client.js'
-import { haptic } from '../hooks/useTelegram.js'
+import { payApi } from '../api/payClient.js'
+import { getTgUser, haptic } from '../hooks/useTelegram.js'
 import {
   formatCardNumber,
   formatExpiry,
@@ -13,26 +13,36 @@ import {
 } from '../utils.js'
 
 export default function PaymentPlan() {
-  const { month_id } = useParams()
+  const { user_id: urlUserId, month_id } = useParams()
   const navigate = useNavigate()
-  const [status, setStatus] = useState(null)
+  const tgUser = getTgUser()
+
+  const userId = useMemo(() => {
+    if (urlUserId && /^\d+$/.test(urlUserId)) return Number(urlUserId)
+    if (tgUser?.id) return Number(tgUser.id)
+    return null
+  }, [urlUserId, tgUser])
+
+  const [plan, setPlan] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [cardNumber, setCardNumber] = useState('')
   const [expiry, setExpiry] = useState('')
   const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState(null)
 
   useEffect(() => {
-    api
-      .getPaymentStatus()
-      .then(setStatus)
+    if (!userId || !month_id) {
+      setError('Foydalanuvchi yoki tarif topilmadi')
+      setLoading(false)
+      return
+    }
+    setLoading(true)
+    payApi
+      .getMonth(userId, Number(month_id))
+      .then(setPlan)
       .catch((e) => setError(e.message))
-  }, [])
-
-  const plan = useMemo(() => {
-    if (!status) return null
-    const monthIdNum = Number(month_id)
-    return (status.months || []).find((m) => m.id === monthIdNum) || null
-  }, [status, month_id])
+      .finally(() => setLoading(false))
+  }, [userId, month_id])
 
   const canSubmit =
     !submitting &&
@@ -47,13 +57,16 @@ export default function PaymentPlan() {
     setSubmitting(true)
     setError(null)
     try {
-      const res = await api.addCard({
-        month: plan.id,
+      const res = await payApi.addCard({
+        user_id: userId,
+        month: Number(month_id),
         card_number: normalizeDigits(cardNumber),
         expiry_month: mm,
         expiry_year: yy,
       })
-      navigate(`/payment/confirm/${res.transaction_id}/${plan.id}`)
+      const txId = res?.transaction_id || res?.id
+      if (!txId) throw new Error("Transaction ID qaytmadi")
+      navigate(`/${userId}/confirm/${txId}/${month_id}`)
     } catch (e) {
       setError(e.message)
     } finally {
@@ -61,24 +74,11 @@ export default function PaymentPlan() {
     }
   }
 
-  if (error && !status) {
+  if (loading) {
     return (
       <>
         <PageHeader title="To'lov" back />
-        <div className="page">
-          <EmptyState title="Xatolik" text={error} />
-        </div>
-      </>
-    )
-  }
-
-  if (!status) {
-    return (
-      <>
-        <PageHeader title="To'lov" back />
-        <div className="page">
-          <div className="loader"><span className="spinner" /></div>
-        </div>
+        <div className="page"><div className="loader"><span className="spinner" /></div></div>
       </>
     )
   }
@@ -88,10 +88,7 @@ export default function PaymentPlan() {
       <>
         <PageHeader title="To'lov" back />
         <div className="page">
-          <EmptyState
-            title="Tarif topilmadi"
-            text="Ushbu tarif mavjud emas yoki olib tashlangan"
-          />
+          <EmptyState title="Tarif topilmadi" text={error || "Ushbu tarif mavjud emas"} />
         </div>
       </>
     )
@@ -107,7 +104,7 @@ export default function PaymentPlan() {
               <span>{plan.name || `${plan.number || ''} oylik obuna`.trim()}</span>
               <b>{formatMoney(plan.money)}</b>
             </div>
-            <span className="ps-change" onClick={() => navigate('/payment')}>
+            <span className="ps-change" onClick={() => navigate(`/${userId}`)}>
               O'zgartirish
             </span>
           </div>

@@ -14,21 +14,12 @@ import Payment from './pages/Payment.jsx'
 import PaymentPlan from './pages/PaymentPlan.jsx'
 import PaymentConfirm from './pages/PaymentConfirm.jsx'
 
-// Eski pay_web link formatini qo'llab-quvvatlash uchun:
-//   /:user_id              → /payment
-//   /:user_id/:month_id    → /payment/:month_id
-function LegacyUserRedirect() {
-  const { user_id } = useParams()
-  if (!/^\d+$/.test(user_id || '')) return <Navigate to="/" replace />
-  return <Navigate to="/payment" replace />
-}
-
-function LegacyMonthRedirect() {
-  const { user_id, month_id } = useParams()
-  if (!/^\d+$/.test(user_id || '') || !/^\d+$/.test(month_id || '')) {
-    return <Navigate to="/" replace />
-  }
-  return <Navigate to={`/payment/${month_id}`} replace />
+// Faqat raqamli user_id'larni pay sahifalariga o'tkazadi (static route'lar bilan to'qnashmasin)
+function NumericRoute({ paramName = 'user_id', children }) {
+  const params = useParams()
+  const value = params[paramName]
+  if (!/^\d+$/.test(value || '')) return <Navigate to="/" replace />
+  return children
 }
 
 export default function App() {
@@ -45,11 +36,22 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/recent" element={<RecentLessons />} />
         <Route path="/referrals" element={<Referrals />} />
+
+        {/* Pay flow (pay_web bilan bir xil URL pattern, backend'siz minds API) */}
         <Route path="/payment" element={<Payment />} />
-        <Route path="/payment/:month_id" element={<PaymentPlan />} />
-        <Route path="/payment/confirm/:transaction_id/:month_id" element={<PaymentConfirm />} />
-        <Route path="/:user_id/:month_id" element={<LegacyMonthRedirect />} />
-        <Route path="/:user_id" element={<LegacyUserRedirect />} />
+        <Route
+          path="/:user_id"
+          element={<NumericRoute><Payment /></NumericRoute>}
+        />
+        <Route
+          path="/:user_id/:month_id"
+          element={<NumericRoute><PaymentPlan /></NumericRoute>}
+        />
+        <Route
+          path="/:user_id/confirm/:transaction_id/:month_id"
+          element={<NumericRoute><PaymentConfirm /></NumericRoute>}
+        />
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

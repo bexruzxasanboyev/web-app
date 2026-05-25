@@ -1,15 +1,23 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CheckCircle2, ShieldCheck } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
-import { api } from '../api/client.js'
-import { haptic } from '../hooks/useTelegram.js'
+import { payApi } from '../api/payClient.js'
+import { getTgUser, haptic } from '../hooks/useTelegram.js'
 
 const CODE_LEN = 6
 
 export default function PaymentConfirm() {
-  const { transaction_id, month_id } = useParams()
+  const { user_id: urlUserId, transaction_id, month_id } = useParams()
   const navigate = useNavigate()
+  const tgUser = getTgUser()
+
+  const userId = useMemo(() => {
+    if (urlUserId && /^\d+$/.test(urlUserId)) return Number(urlUserId)
+    if (tgUser?.id) return Number(tgUser.id)
+    return null
+  }, [urlUserId, tgUser])
+
   const [code, setCode] = useState(Array(CODE_LEN).fill(''))
   const [submitting, setSubmitting] = useState(false)
   const [resending, setResending] = useState(false)
@@ -18,9 +26,7 @@ export default function PaymentConfirm() {
   const [success, setSuccess] = useState(false)
   const inputsRef = useRef([])
 
-  useEffect(() => {
-    inputsRef.current[0]?.focus()
-  }, [])
+  useEffect(() => { inputsRef.current[0]?.focus() }, [])
 
   useEffect(() => {
     if (resendTimer <= 0) return
@@ -35,13 +41,9 @@ export default function PaymentConfirm() {
     setCode(next)
     if (digit && i < CODE_LEN - 1) inputsRef.current[i + 1]?.focus()
   }
-
   const handleKeyDown = (i, e) => {
-    if (e.key === 'Backspace' && !code[i] && i > 0) {
-      inputsRef.current[i - 1]?.focus()
-    }
+    if (e.key === 'Backspace' && !code[i] && i > 0) inputsRef.current[i - 1]?.focus()
   }
-
   const handlePaste = (e) => {
     e.preventDefault()
     const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, CODE_LEN)
@@ -55,12 +57,13 @@ export default function PaymentConfirm() {
   const isComplete = code.every((d) => d !== '')
 
   const onConfirm = async () => {
-    if (!isComplete || submitting) return
+    if (!isComplete || submitting || !userId) return
     haptic()
     setSubmitting(true)
     setError(null)
     try {
-      await api.confirmCard({
+      await payApi.confirmCard({
+        user_id: userId,
         month: Number(month_id),
         transaction_id: Number(transaction_id),
         code: code.join(''),
@@ -75,19 +78,19 @@ export default function PaymentConfirm() {
   }
 
   const onResend = async () => {
-    if (resendTimer > 0 || resending) return
+    if (resendTimer > 0 || resending || !userId) return
     setResending(true)
     setError(null)
     try {
-      const res = await api.addCard({
+      const res = await payApi.addCard({
+        user_id: userId,
         month: Number(month_id),
         card_number: '',
         expiry_month: '',
         expiry_year: '',
       })
-      if (res?.transaction_id) {
-        navigate(`/payment/confirm/${res.transaction_id}/${month_id}`, { replace: true })
-      }
+      const txId = res?.transaction_id || res?.id
+      if (txId) navigate(`/${userId}/confirm/${txId}/${month_id}`, { replace: true })
       setResendTimer(120)
       setCode(Array(CODE_LEN).fill(''))
       inputsRef.current[0]?.focus()
@@ -98,11 +101,7 @@ export default function PaymentConfirm() {
     }
   }
 
-  const fmtTimer = (s) => {
-    const m = Math.floor(s / 60)
-    const r = s % 60
-    return `${m}:${r.toString().padStart(2, '0')}`
-  }
+  const fmtTimer = (s) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`
 
   if (success) {
     return (
@@ -112,9 +111,9 @@ export default function PaymentConfirm() {
           <div className="pay-success">
             <span className="pay-success-icon"><CheckCircle2 size={42} /></span>
             <h2>Obuna faollashdi</h2>
-            <p>To'lov muvaffaqiyatli tasdiqlandi. Darsliklarga to'liq kirish ochildi.</p>
-            <button className="watch-btn" onClick={() => navigate('/')}>
-              Bosh sahifaga o'tish
+            <p>To'lov muvaffaqiyatli tasdiqlandi.</p>
+            <button className="watch-btn" onClick={() => navigate(`/${userId}`)}>
+              Obuna sahifasiga qaytish
             </button>
           </div>
         </div>
@@ -167,9 +166,7 @@ export default function PaymentConfirm() {
           >
             {resendTimer > 0
               ? `Kodni qayta yuborish (${fmtTimer(resendTimer)})`
-              : resending
-              ? 'Yuborilmoqda...'
-              : 'Kodni qayta yuborish'}
+              : resending ? 'Yuborilmoqda...' : 'Kodni qayta yuborish'}
           </button>
         </div>
       </div>
