@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useParams } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import Home from './pages/Home.jsx'
 import SectionDetail from './pages/SectionDetail.jsx'
@@ -13,6 +13,24 @@ import Referrals from './pages/Referrals.jsx'
 import Payment from './pages/Payment.jsx'
 import PaymentPlan from './pages/PaymentPlan.jsx'
 import PaymentConfirm from './pages/PaymentConfirm.jsx'
+
+// Eski pay_web link formatini qo'llab-quvvatlash uchun:
+//   /:user_id              → /payment
+//   /:user_id/:month_id    → /payment/:month_id
+function LegacyUserRedirect() {
+  const { user_id } = useParams()
+  if (!/^\d+$/.test(user_id || '')) return <Navigate to="/" replace />
+  return <Navigate to="/payment" replace />
+}
+
+function LegacyMonthRedirect() {
+  const { user_id, month_id } = useParams()
+  if (!/^\d+$/.test(user_id || '') || !/^\d+$/.test(month_id || '')) {
+    return <Navigate to="/" replace />
+  }
+  return <Navigate to={`/payment/${month_id}`} replace />
+}
+
 export default function App() {
   return (
     <Routes>
@@ -30,6 +48,9 @@ export default function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/payment/:month_id" element={<PaymentPlan />} />
         <Route path="/payment/confirm/:transaction_id/:month_id" element={<PaymentConfirm />} />
+        <Route path="/:user_id/:month_id" element={<LegacyMonthRedirect />} />
+        <Route path="/:user_id" element={<LegacyUserRedirect />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
   )
