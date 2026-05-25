@@ -1495,3 +1495,94 @@ button {
 .pay-success h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
 .pay-success p { color: var(--text-dim); font-size: 14px; line-height: 1.55; }
 .pay-success .watch-btn { margin-top: 22px; max-width: 320px; }
+
+/* ===== Foydalanuvchi kartasi (Payment HomePage) ===== */
+.pay-account-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.pa-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.pa-head-info { min-width: 0; }
+.pa-label {
+  color: var(--text-mute);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.pa-name { font-size: 18px; font-weight: 800; color: var(--text); }
+.pa-username { color: var(--text-dim); font-size: 13px; margin-top: 2px; }
+.pa-status {
+  font-size: 11.5px; font-weight: 700;
+  padding: 6px 10px; border-radius: 999px;
+  flex-shrink: 0;
+}
+.pa-status-active { background: rgba(76, 175, 80, 0.16); color: #6ed074; }
+.pa-status-inactive { background: rgba(227, 179, 65, 0.12); color: var(--gold-light); }
+.pa-deadline {
+  background: var(--card-2);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.pa-days {
+  font-size: 24px; font-weight: 800; color: var(--text);
+  margin: 2px 0;
+}
+.pa-deadline-sub { color: var(--text-mute); font-size: 12px; }
+.pa-paid {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.25);
+  color: #b5dbb8;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+/* ===== Payment menu card (To'lovlar tarixi va h.k.) ===== */
+.pay-menu-card {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.pay-menu-card:active { background: var(--card-2); border-color: rgba(227, 179, 65, 0.4); }
+.pmc-icon {
+  width: 32px; height: 32px; border-radius: 10px;
+  background: rgba(227, 179, 65, 0.12);
+  color: var(--gold-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.pmc-text { flex: 1; font-weight: 700; font-size: 14px; }
+.pmc-arrow { color: var(--text-mute); flex-shrink: 0; }
+
+/* ===== OTP kod kiritish ===== */
+.otp-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin: 18px 0 6px;
+}
+.otp-input {
+  height: 52px;
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: var(--text);
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.otp-input:focus { border-color: rgba(227, 179, 65, 0.55); }

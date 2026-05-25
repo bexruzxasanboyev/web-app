@@ -11,6 +11,8 @@ import Profile from './pages/Profile.jsx'
 import RecentLessons from './pages/RecentLessons.jsx'
 import Referrals from './pages/Referrals.jsx'
 import Payment from './pages/Payment.jsx'
+import PaymentPlan from './pages/PaymentPlan.jsx'
+import PaymentConfirm from './pages/PaymentConfirm.jsx'
 
 export default function App() {
   return (
@@ -27,6 +29,8 @@ export default function App() {
         <Route path="/recent" element={<RecentLessons />} />
         <Route path="/referrals" element={<Referrals />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/payment/:month_id" element={<PaymentPlan />} />
+        <Route path="/payment/confirm/:transaction_id/:month_id" element={<PaymentConfirm />} />
       </Route>
     </Routes>
   )
