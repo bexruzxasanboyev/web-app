@@ -4,18 +4,18 @@ import PageHeader from '../components/PageHeader.jsx'
 const ROWS = [
   {
     icon: Layers,
-    title: 'Prisma nima?',
-    desc: 'Biznes, marketing va shaxsiy rivojlanish kurslari',
+    title: 'Akademiya nima?',
+    desc: 'Sotuv, marketing va biznes audit bo\'yicha amaliy kurslar',
   },
   {
     icon: BookOpen,
     title: 'Darsliklar',
-    desc: 'Video darslar va amaliy materiallar',
+    desc: 'Video darslar va real biznes case\'lar',
   },
   {
     icon: Target,
     title: 'Maqsad',
-    desc: 'Har kim uchun biznes qurishni osonlashtirish',
+    desc: 'Sotuvni o\'sishi va biznesni tartibga keltirish',
   },
 ]
 
@@ -76,8 +76,8 @@ export default function About() {
               </g>
             </svg>
           </div>
-          <h2 className="brand-name">Prisma</h2>
-          <p className="brand-tagline">Bilim — yangi qarashlar nuri</p>
+          <h2 className="brand-name">Dilrabo Isroilova</h2>
+          <p className="brand-tagline">Sotuv va Audit akademiyasi</p>
         </div>
 
         <div className="stat-grid">

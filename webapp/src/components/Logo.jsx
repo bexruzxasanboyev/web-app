@@ -1,4 +1,4 @@
-// Prisma logotipi — oltin rangli tog'/strelka shakli.
+// Logotip — oltin rangli tog'/strelka shakli.
 export default function Logo({ size = 72 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" fill="none">

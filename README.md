@@ -1,7 +1,11 @@
-men# Prisma — Telegram Bot + Mini App
+# Dilrabo Isroilova — Sotuv va Audit (Telegram Bot + Mini App)
 
-`@prisma_uz_bot` — biznes va shaxsiy rivojlanish darsliklari platformasi.
-Telegram bot va mini app (web app).
+`@salesaireportdilraboisraolivabot` — Dilrabo Isroilova "Sotuv va Audit"
+akademiyasining rasmiy boti va mini app'i.
+
+> **Eslatma:** kod ichida va serverda papka/servis/baza nomi `prisma` deb
+> qolgan (boshlang'ich loyiha nomi). Bu faqat ichki kod nomi — foydalanuvchi
+> ko'rmaydi. Hammasini qayta nomlash production downtime talab qiladi.
 
 ## Stack
 
@@ -101,5 +105,5 @@ Keyin har safar lokal PowerShell'dan:
 ## Holat
 
 🟢 **To'liq versiya:** bot va mini app `@avtopilotminiappbot` dizayniga mos
-qilib, **Prisma** brendi ostida qurildi. Kontent (haqiqiy darslik matnlari,
+qilib, **Dilrabo Isroilova — Sotuv va Audit** brendi ostida qurildi. Kontent (haqiqiy darslik matnlari,
 rasm, video) `seed_data.json` orqali qo'shiladi.

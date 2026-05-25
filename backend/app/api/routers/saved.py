@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.deps import get_current_user
+from app.api.deps import require_subscription
 from app.api.schemas import LessonCardOut
 from app.core.database import get_session
 from app.models.engagement import SavedLesson
@@ -15,7 +15,7 @@ router = APIRouter(prefix="/saved", tags=["saved"])
 
 @router.get("", response_model=list[LessonCardOut])
 async def list_saved(
-    user: User = Depends(get_current_user),
+    user: User = Depends(require_subscription),
     session: AsyncSession = Depends(get_session),
 ) -> list[LessonCardOut]:
     lessons = (

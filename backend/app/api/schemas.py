@@ -20,6 +20,12 @@ class UserOut(ORMModel):
     created_at: datetime
 
 
+# --- Obuna (minds) ---
+class SubscriptionOut(BaseModel):
+    is_active: bool = False
+    deadline: str | None = None  # YYYY-MM-DD
+
+
 # --- Bo'lim ---
 class SectionOut(ORMModel):
     id: int
@@ -86,6 +92,7 @@ class HomeOut(BaseModel):
     sections: list[SectionOut] = []
     section_count: int = 0
     referral_link: str = ""
+    subscription: SubscriptionOut | None = None
 
 
 # --- Profil ---
@@ -108,6 +115,43 @@ class ProfileOut(BaseModel):
     recent_count: int = 0
     referral_count: int = 0
     referral_link: str = ""
+    subscription: SubscriptionOut = SubscriptionOut()
+
+
+# --- To'lov / Obuna ---
+class MonthOut(BaseModel):
+    id: int
+    number: int | None = None
+    name: str | None = None
+    money: float | None = None
+
+
+class PaymentStatusOut(BaseModel):
+    subscription: SubscriptionOut
+    months: list[MonthOut] = []
+
+
+class CardAddIn(BaseModel):
+    month: int
+    card_number: str
+    expiry_year: str
+    expiry_month: str
+
+
+class CardAddOut(BaseModel):
+    transaction_id: int
+    raw: dict | None = None
+
+
+class CardConfirmIn(BaseModel):
+    month: int
+    transaction_id: int
+    code: str
+
+
+class CardConfirmOut(BaseModel):
+    ok: bool = True
+    subscription: SubscriptionOut
 
 
 # --- Umumiy javoblar ---

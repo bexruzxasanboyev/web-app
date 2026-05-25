@@ -6,7 +6,7 @@ from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.api.deps import get_current_user
+from app.api.deps import get_current_user, require_subscription
 from app.api.schemas import LessonDetailOut, SavedToggleOut
 from app.core.database import get_session
 from app.models.engagement import LessonView, SavedLesson
@@ -30,7 +30,7 @@ async def _get_lesson_or_404(session: AsyncSession, lesson_id: int) -> Lesson:
 @router.get("/{lesson_id}", response_model=LessonDetailOut)
 async def get_lesson(
     lesson_id: int,
-    user: User = Depends(get_current_user),
+    user: User = Depends(require_subscription),
     session: AsyncSession = Depends(get_session),
 ) -> LessonDetailOut:
     lesson = await _get_lesson_or_404(session, lesson_id)
@@ -81,7 +81,7 @@ async def get_lesson(
 @router.post("/{lesson_id}/save", response_model=SavedToggleOut)
 async def save_lesson(
     lesson_id: int,
-    user: User = Depends(get_current_user),
+    user: User = Depends(require_subscription),
     session: AsyncSession = Depends(get_session),
 ) -> SavedToggleOut:
     await _get_lesson_or_404(session, lesson_id)
@@ -102,7 +102,7 @@ async def save_lesson(
 @router.delete("/{lesson_id}/save", response_model=SavedToggleOut)
 async def unsave_lesson(
     lesson_id: int,
-    user: User = Depends(get_current_user),
+    user: User = Depends(require_subscription),
     session: AsyncSession = Depends(get_session),
 ) -> SavedToggleOut:
     await session.execute(

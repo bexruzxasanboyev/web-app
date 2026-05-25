@@ -1,7 +1,7 @@
 import { ChevronRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
-const MENTOR_DEFAULT = 'Prisma jamoasi'
+const MENTOR_DEFAULT = 'Dilrabo Isroilova'
 
 export default function LessonCard({ lesson, index = 0 }) {
   const navigate = useNavigate()

@@ -6,6 +6,7 @@ from app.api.routers import (
     faq,
     home,
     lessons,
+    payment,
     profile,
     saved,
     search,
@@ -14,7 +15,7 @@ from app.api.routers import (
 )
 from app.core.config import settings
 
-app = FastAPI(title="Prisma Mini App API", version="1.0.0")
+app = FastAPI(title="Dilrabo Isroilova Mini App API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -32,6 +33,7 @@ for router in (
     saved.router,
     search.router,
     profile.router,
+    payment.router,
     users.router,
 ):
     app.include_router(router, prefix="/api")

@@ -63,7 +63,7 @@ export function openLink(url) {
 
 export function shareReferral(link) {
   if (!link) return
-  const text = "Prisma platformasiga qo'shiling — biznes va shaxsiy rivojlanish darsliklari!"
+  const text = "Dilrabo Isroilova \"Sotuv va Audit\" akademiyasiga qo'shiling — sotuv, marketing va biznes audit darslari!"
   const shareUrl =
     `https://t.me/share/url?url=${encodeURIComponent(link)}` +
     `&text=${encodeURIComponent(text)}`

@@ -3,13 +3,14 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.deps import get_current_user
-from app.api.schemas import BannerOut, HomeOut, SectionOut
+from app.api.deps import fetch_minds_user, get_current_user
+from app.api.schemas import BannerOut, HomeOut, SectionOut, SubscriptionOut
 from app.core.database import get_session
 from app.models.banner import Banner
 from app.models.lesson import Lesson
 from app.models.section import Section
 from app.models.user import User
+from app.services.minds import is_subscription_active, parse_deadline
 from app.services.referral import build_referral_link
 
 router = APIRouter(tags=["home"])
@@ -53,9 +54,18 @@ async def get_home(
         for section, count in rows
     ]
 
+    minds_user = await fetch_minds_user(user.telegram_id)
+    deadline_raw = minds_user.get("deadline") if isinstance(minds_user, dict) else None
+    deadline = parse_deadline(deadline_raw)
+    subscription = SubscriptionOut(
+        is_active=is_subscription_active(deadline_raw) or user.is_admin,
+        deadline=deadline.isoformat() if deadline else None,
+    )
+
     return HomeOut(
         banners=[BannerOut.model_validate(b) for b in banners],
         sections=sections,
         section_count=len(sections),
         referral_link=build_referral_link(user.telegram_id),
+        subscription=subscription,
     )

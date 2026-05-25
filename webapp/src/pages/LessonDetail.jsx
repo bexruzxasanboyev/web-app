@@ -4,29 +4,35 @@ import { AlertTriangle, Heart, Play } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
 import { EmptyState } from '../components/States.jsx'
 import { LessonDetailSkeleton } from '../components/Skeletons.jsx'
+import Paywall from '../components/Paywall.jsx'
 import { api } from '../api/client.js'
 import { formatDate } from '../utils.js'
 import { haptic, openLink } from '../hooks/useTelegram.js'
 
-const MENTOR_DEFAULT = 'Prisma jamoasi'
+const MENTOR_DEFAULT = 'Dilrabo Isroilova'
 
 export default function LessonDetail() {
   const { id } = useParams()
   const [lesson, setLesson] = useState(null)
   const [error, setError] = useState(null)
+  const [locked, setLocked] = useState(false)
   const [saved, setSaved] = useState(false)
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     setLesson(null)
     setError(null)
+    setLocked(false)
     api
       .getLesson(id)
       .then((data) => {
         setLesson(data)
         setSaved(data.is_saved)
       })
-      .catch((e) => setError(e.message))
+      .catch((e) => {
+        if (e.paymentRequired) setLocked(true)
+        else setError(e.message)
+      })
   }, [id])
 
   const toggleSave = async () => {
@@ -56,8 +62,14 @@ export default function LessonDetail() {
     <>
       <PageHeader title="Darslik" back />
       <div className="page">
-        {error && <EmptyState title="Xatolik" text={error} />}
-        {!lesson && !error && <LessonDetailSkeleton />}
+        {locked && (
+          <Paywall
+            title="Bu darslik obuna ostida"
+            text="Barcha darsliklarga to'liq kirish uchun obuna sotib oling."
+          />
+        )}
+        {error && !locked && <EmptyState title="Xatolik" text={error} />}
+        {!lesson && !error && !locked && <LessonDetailSkeleton />}
         {lesson && (
           <>
             <div className="dl-hero">

@@ -11,10 +11,10 @@ class Settings(BaseSettings):
 
     # Telegram
     bot_token: str
-    bot_username: str = "prisma_uz_bot"
+    bot_username: str = "salesaireportdilraboisraolivabot"
     webapp_url: str = "http://localhost:5173"
-    support_url: str = "https://t.me/prisma_uz_bot"
-    menu_button_text: str = "Prisma"
+    support_url: str = "https://t.me/salesaireportdilraboisraolivabot"
+    menu_button_text: str = "Sotuv va Audit"
 
     # Ma'lumotlar bazasi (postgresql+asyncpg://...)
     database_url: str
@@ -31,6 +31,11 @@ class Settings(BaseSettings):
     # initData bo'lmasa standart "Test Admin" foydalanuvchi ishlatiladi.
     # Loyiha to'liq ishga tushganda False qiling.
     dev_auth_bypass: bool = False
+
+    # minds.abdulvahob-blog.uz — tashqi to'lov/obuna backend'i
+    minds_api_url: str = "https://minds.abdulvahob-blog.uz"
+    minds_username: str = ""
+    minds_password: str = ""
 
 
 settings = Settings()  # type: ignore[call-arg]

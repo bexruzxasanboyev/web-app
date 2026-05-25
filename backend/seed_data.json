@@ -3,9 +3,9 @@
 
   "sections": [
     { "key": "jonli-efir",     "title": "Jonli efir",          "image_url": null, "position": 1 },
-    { "key": "prisma-sotuv",   "title": "Prisma sotuv",        "image_url": null, "position": 2 },
-    { "key": "prisma-mark",    "title": "Prisma marketing",    "image_url": null, "position": 3 },
-    { "key": "prisma-tizim",   "title": "Prisma tizim",        "image_url": null, "position": 4 },
+    { "key": "sotuv",          "title": "Sotuv darslari",      "image_url": null, "position": 2 },
+    { "key": "marketing",      "title": "Marketing",           "image_url": null, "position": 3 },
+    { "key": "audit",          "title": "Biznes audit",        "image_url": null, "position": 4 },
     { "key": "shogirdlik",     "title": "Shogirdlik kurslari", "image_url": null, "position": 5 },
     { "key": "biznes-goya",    "title": "Biznes g'oyalar",     "image_url": null, "position": 6 },
     { "key": "shaxsiy",        "title": "Shaxsiy rivojlanish", "image_url": null, "position": 7 },
@@ -15,25 +15,25 @@
   ],
 
   "lessons": [
-    { "key": "razbor-1", "section": "jonli-efir", "title": "Biznesingizni tahlil qildirishga tayyormisiz?", "image_url": null, "body": "\"Prisma\" doirasida navbatdagi Razbor (Biznes-tahlil) sessiyasini o'tkazamiz! Jonli efirda biz anketada to'ldirgan javoblaringizga qarab biz sizni tanlaymiz.", "warning": "Anketa qanchalik batafsil va aniq raqamlar bilan to'ldirilsa, tanlanish imkoniyati shunchalik yuqori bo'ladi.", "video_url": null, "cta_label": "Ro'yxatdan o'tish", "cta_url": "https://t.me/prisma_uz_bot", "is_new": true, "position": 1, "published_at": "2026-04-27" },
+    { "key": "razbor-1", "section": "jonli-efir", "title": "Biznesingizni tahlil qildirishga tayyormisiz?", "image_url": null, "body": "\"Sotuv va Audit\" akademiyasi doirasida navbatdagi Razbor (Biznes-tahlil) sessiyasini o'tkazamiz! Jonli efirda biz anketada to'ldirgan javoblaringizga qarab biz sizni tanlaymiz.", "warning": "Anketa qanchalik batafsil va aniq raqamlar bilan to'ldirilsa, tanlanish imkoniyati shunchalik yuqori bo'ladi.", "video_url": null, "cta_label": "Ro'yxatdan o'tish", "cta_url": "https://t.me/salesaireportdilraboisraolivabot", "is_new": true, "position": 1, "published_at": "2026-04-27" },
     { "section": "jonli-efir", "title": "Jonli efir: Savol-javob sessiyasi", "image_url": null, "body": "Har hafta o'tkaziladigan jonli efir. Savollaringizni oldindan yuborib qoldiring.", "warning": null, "is_new": false, "position": 2, "published_at": "2026-04-20" },
     { "section": "jonli-efir", "title": "Yangi mahsulot bilan bozorga chiqish", "image_url": null, "body": "Yangi mahsulotni qanday tayyorlash, pre-launch va launch strategiyasi. Mijozlarni qanday qiziqtirish.", "warning": "Mahsulotsiz marketing — havoga gapirish.", "is_new": true, "position": 3, "published_at": "2026-05-08" },
     { "section": "jonli-efir", "title": "Marketing strategiyasi — 2026 yilga", "image_url": null, "body": "Yangi yil uchun marketing rejasi qanday bo'lishi kerak. Trendlar, byudjet, kanallar.", "warning": null, "is_new": true, "position": 4, "published_at": "2026-05-16" },
 
-    { "section": "prisma-sotuv", "title": "Sotuvning 5 bosqichi", "image_url": null, "body": "Mijoz bilan birinchi aloqadan kelishuvgacha bo'lgan barcha bosqichlar.", "warning": null, "is_new": true, "position": 1, "published_at": "2026-05-10" },
-    { "section": "prisma-sotuv", "title": "Mijoz qaytmasini (LTV) oshirish", "image_url": null, "body": "Bir martagi xaridordan doimiy mijozga aylantirish — eng katta foyda manbai.", "warning": null, "is_new": false, "position": 2, "published_at": "2026-04-15" },
-    { "section": "prisma-sotuv", "title": "Telegramda sotuv: 0 dan 100 ga", "image_url": null, "body": "Telegram orqali mijoz topish, suhbatlashish va savdoni yopishning amaliy yo'llari.", "warning": null, "is_new": true, "position": 3, "published_at": "2026-05-12" },
-    { "section": "prisma-sotuv", "title": "Cross-sell va Up-sell texnikalari", "image_url": null, "body": "Bir savdoda bir necha mahsulot sotish. Real misollar bilan.", "warning": null, "is_new": false, "position": 4, "published_at": "2026-04-22" },
+    { "section": "sotuv", "title": "Sotuvning 5 bosqichi", "image_url": null, "body": "Mijoz bilan birinchi aloqadan kelishuvgacha bo'lgan barcha bosqichlar.", "warning": null, "is_new": true, "position": 1, "published_at": "2026-05-10" },
+    { "section": "sotuv", "title": "Mijoz qaytmasini (LTV) oshirish", "image_url": null, "body": "Bir martagi xaridordan doimiy mijozga aylantirish — eng katta foyda manbai.", "warning": null, "is_new": false, "position": 2, "published_at": "2026-04-15" },
+    { "section": "sotuv", "title": "Telegramda sotuv: 0 dan 100 ga", "image_url": null, "body": "Telegram orqali mijoz topish, suhbatlashish va savdoni yopishning amaliy yo'llari.", "warning": null, "is_new": true, "position": 3, "published_at": "2026-05-12" },
+    { "section": "sotuv", "title": "Cross-sell va Up-sell texnikalari", "image_url": null, "body": "Bir savdoda bir necha mahsulot sotish. Real misollar bilan.", "warning": null, "is_new": false, "position": 4, "published_at": "2026-04-22" },
 
-    { "section": "prisma-mark", "title": "Marketing voronkasi nima?", "image_url": null, "body": "Marketing voronkasi qanday ishlaydi va uni qanday qurish kerak.", "warning": null, "is_new": false, "position": 1, "published_at": "2026-05-05" },
-    { "section": "prisma-mark", "title": "Instagram marketingi: 2026 trendlari", "image_url": null, "body": "Yangi Instagram algoritmlari, Reels strategiyasi va kontent rejalashtirish.", "warning": null, "is_new": true, "position": 2, "published_at": "2026-05-14" },
-    { "section": "prisma-mark", "title": "Lead generatsiya: 7 ta usul", "image_url": null, "body": "Mijoz topishning 7 ta isbotlangan usuli. Har biriga real misol.", "warning": null, "is_new": true, "position": 3, "published_at": "2026-05-11" },
-    { "section": "prisma-mark", "title": "Reklama byudjetini boshqarish", "image_url": null, "body": "Reklamaga sarflagan har bir pulingiz qanday qaytishini hisoblash.", "warning": "ROI'ni hisoblamasdan reklama bermang.", "is_new": false, "position": 4, "published_at": "2026-04-18" },
+    { "section": "marketing", "title": "Marketing voronkasi nima?", "image_url": null, "body": "Marketing voronkasi qanday ishlaydi va uni qanday qurish kerak.", "warning": null, "is_new": false, "position": 1, "published_at": "2026-05-05" },
+    { "section": "marketing", "title": "Instagram marketingi: 2026 trendlari", "image_url": null, "body": "Yangi Instagram algoritmlari, Reels strategiyasi va kontent rejalashtirish.", "warning": null, "is_new": true, "position": 2, "published_at": "2026-05-14" },
+    { "section": "marketing", "title": "Lead generatsiya: 7 ta usul", "image_url": null, "body": "Mijoz topishning 7 ta isbotlangan usuli. Har biriga real misol.", "warning": null, "is_new": true, "position": 3, "published_at": "2026-05-11" },
+    { "section": "marketing", "title": "Reklama byudjetini boshqarish", "image_url": null, "body": "Reklamaga sarflagan har bir pulingiz qanday qaytishini hisoblash.", "warning": "ROI'ni hisoblamasdan reklama bermang.", "is_new": false, "position": 4, "published_at": "2026-04-18" },
 
-    { "section": "prisma-tizim", "title": "Biznesni avtomatlashtirish asoslari", "image_url": null, "body": "Prisma tizimini biznesingizga qanday joriy qilish mumkin.", "warning": null, "is_new": true, "position": 1, "published_at": "2026-05-15" },
-    { "section": "prisma-tizim", "title": "CRM tanlash bo'yicha qo'llanma", "image_url": null, "body": "Bitrix24, AmoCRM yoki o'z tizim — qaysi biri sizga to'g'ri keladi.", "warning": null, "is_new": false, "position": 2, "published_at": "2026-04-25" },
-    { "section": "prisma-tizim", "title": "Avtomatik xat yuborish (email/sms)", "image_url": null, "body": "Mijozga to'g'ri vaqtda to'g'ri xabar — savdoni 30%ga oshiradi.", "warning": null, "is_new": true, "position": 3, "published_at": "2026-05-09" },
-    { "section": "prisma-tizim", "title": "Hisobotlar va dashboard'lar", "image_url": null, "body": "Biznesingizdagi har bir raqamni ko'rib turish. Kerakli ko'rsatkichlar.", "warning": null, "is_new": false, "position": 4, "published_at": "2026-04-30" },
+    { "section": "audit", "title": "Biznes auditi nima va nima uchun kerak?", "image_url": null, "body": "Biznesingizning kuchli va zaif tomonlarini aniqlash. Audit jarayonining bosqichlari.", "warning": null, "is_new": true, "position": 1, "published_at": "2026-05-15" },
+    { "section": "audit", "title": "Moliyaviy audit asoslari", "image_url": null, "body": "Daromad, xarajat va foyda hisobotlarini to'g'ri o'qish va tahlil qilish.", "warning": null, "is_new": false, "position": 2, "published_at": "2026-04-25" },
+    { "section": "audit", "title": "Sotuv jamoasi auditi", "image_url": null, "body": "Sotuv menejerlarining ish samaradorligini o'lchash. KPI'lar va motivatsiya tizimi.", "warning": null, "is_new": true, "position": 3, "published_at": "2026-05-09" },
+    { "section": "audit", "title": "Hisobotlar va dashboard'lar", "image_url": null, "body": "Biznesingizdagi har bir raqamni ko'rib turish. Kerakli ko'rsatkichlar.", "warning": null, "is_new": false, "position": 4, "published_at": "2026-04-30" },
 
     { "section": "shogirdlik", "title": "Shogirdlik dasturi haqida", "image_url": null, "body": "Shogirdlik kursida nimalarni o'rganasiz va u kim uchun.", "warning": null, "is_new": false, "position": 1, "published_at": "2026-04-28" },
     { "section": "shogirdlik", "title": "1-bosqich: Motivatsiya va maqsad", "image_url": null, "body": "O'zingizni tushunish, motivatsiya manbalari, aniq maqsadlar qo'yish.", "warning": null, "is_new": false, "position": 2, "published_at": "2026-04-29" },
@@ -68,8 +68,8 @@
 
   "banners": [
     {
-      "title": "Prisma asoschisi",
-      "subtitle": "Biznes va shaxsiy rivojlanish ustozi",
+      "title": "Dilrabo Isroilova",
+      "subtitle": "Sotuv va Audit ustozi",
       "image_url": "/expert2.png",
       "badge_text": "USTOZ",
       "lesson": null,
@@ -78,7 +78,7 @@
   ],
 
   "faq": [
-    { "question": "Prisma nima?", "answer": "Prisma — biznes, marketing va shaxsiy rivojlanish bo'yicha video darslar va amaliy materiallar platformasi. Bu yerda siz biznesingizni avtomatlashtirish va rivojlantirish bo'yicha bilim olasiz." },
+    { "question": "Bu platforma nima?", "answer": "Dilrabo Isroilova — Sotuv va Audit akademiyasi: sotuv ko'nikmalari, biznes auditi, marketing va shaxsiy rivojlanish bo'yicha video darslar va amaliy materiallar." },
     { "question": "Darsliklarni qanday ko'raman?", "answer": "Bosh sahifadagi bo'limlardan birini tanlang, so'ng kerakli darslikni oching. Har bir darslikda matn, video va foydali havolalar bo'lishi mumkin." },
     { "question": "Bildirishnomalarni qanday yoqaman?", "answer": "Bot menyusidagi \"Bildirishnoma\" tugmasini bosing va holatni \"Yoqilgan\" qilib qo'ying. Shunda yangi darsliklar qo'shilganda xabar olasiz." },
     { "question": "Darsliklarni saqlash mumkinmi?", "answer": "Ha. Darslikni ochib, yurak belgisini bosing. Saqlangan darsliklar \"Saqlangan\" bo'limida to'planadi." },

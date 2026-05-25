@@ -1,5 +1,6 @@
 """FastAPI dependency'lari — autentifikatsiya va foydalanuvchi."""
 import logging
+import time
 
 from fastapi import Depends, Header, HTTPException, status
 from sqlalchemy import select
@@ -9,8 +10,35 @@ from app.core.config import settings
 from app.core.database import get_session
 from app.core.security import InitDataError, validate_init_data
 from app.models.user import User
+from app.services.minds import MindsError, is_subscription_active, minds
 
 logger = logging.getLogger(__name__)
+
+# minds /users/one javobi bir necha so'rovda qayta-qayta kerak bo'ladi
+# (status, lessons, saved...). Foydalanuvchilarni 30 soniya in-memory kesh
+# qilamiz — bu minds'ga yuklamani sezilarli kamaytiradi.
+_USER_CACHE: dict[int, tuple[float, dict | None]] = {}
+_USER_CACHE_TTL = 30.0  # soniya
+
+
+async def fetch_minds_user(telegram_id: int) -> dict | None:
+    """minds'dan foydalanuvchini oladi (qisqa keshli)."""
+    now = time.time()
+    cached = _USER_CACHE.get(telegram_id)
+    if cached and now - cached[0] < _USER_CACHE_TTL:
+        return cached[1]
+    try:
+        data = await minds.get_user(telegram_id, raise_on_missing=False)
+    except MindsError as exc:
+        logger.warning("minds users/one xatosi (%s): %s", telegram_id, exc)
+        return None
+    _USER_CACHE[telegram_id] = (now, data)
+    return data
+
+
+def invalidate_minds_user(telegram_id: int) -> None:
+    """To'lov muvaffaqiyatli o'tgandan keyin keshni tozalash uchun."""
+    _USER_CACHE.pop(telegram_id, None)
 
 # Test/dev rejimi uchun standart "admin" foydalanuvchi
 _TEST_USER = {
@@ -77,5 +105,22 @@ async def get_current_user(
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Foydalanuvchi bloklangan",
+        )
+    return user
+
+
+async def require_subscription(user: User = Depends(get_current_user)) -> User:
+    """Faol obunasi bo'lmagan foydalanuvchi uchun 402 qaytaradi.
+
+    Adminlar to'lovsiz ham hammasiga kira oladi.
+    """
+    if user.is_admin:
+        return user
+    minds_user = await fetch_minds_user(user.telegram_id)
+    deadline_raw = minds_user.get("deadline") if isinstance(minds_user, dict) else None
+    if not is_subscription_active(deadline_raw):
+        raise HTTPException(
+            status_code=status.HTTP_402_PAYMENT_REQUIRED,
+            detail="Obuna talab qilinadi",
         )
     return user

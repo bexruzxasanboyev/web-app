@@ -10,6 +10,7 @@ import About from './pages/About.jsx'
 import Profile from './pages/Profile.jsx'
 import RecentLessons from './pages/RecentLessons.jsx'
 import Referrals from './pages/Referrals.jsx'
+import Payment from './pages/Payment.jsx'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/recent" element={<RecentLessons />} />
         <Route path="/referrals" element={<Referrals />} />
+        <Route path="/payment" element={<Payment />} />
       </Route>
     </Routes>
   )

@@ -18,13 +18,13 @@ BTN_CONTACT = "📲 Murojaat qilish"
 def start_text(first_name: str) -> str:
     return (
         f"👋 Assalomu alaykum, <b>{first_name}</b>!\n\n"
-        "🚀 <b>Prisma</b> — biznes va shaxsiy rivojlanish bo'yicha eng "
-        "yaxshi darsliklar platformasi!\n\n"
+        "🚀 <b>Dilrabo Isroilova</b> — <i>Sotuv va Audit</i> akademiyasiga "
+        "xush kelibsiz!\n\n"
         "📚 Bu yerda siz topasiz:\n"
-        "• Shogirdlik kurslari\n"
-        "• Biznes g'oyalar\n"
-        "• Prisma tizimlari\n"
-        "• Va yana ko'p narsalar!\n\n"
+        "• Sotuv ko'nikmalari va texnikalari\n"
+        "• Biznes auditi va tahlili\n"
+        "• Mijoz bilan ishlash sirlari\n"
+        "• Marketing va savdo strategiyalari\n\n"
         "👇 Quyidagi tugmalardan foydalaning:"
     )
 
@@ -45,13 +45,13 @@ def notifications_text(enabled: bool) -> str:
 
 
 ABOUT_TEXT = (
-    "📖 <b>Prisma Bot haqida</b>\n\n"
-    "📺 Bu bot Prisma platformasining rasmiy boti.\n\n"
+    "📖 <b>Dilrabo Isroilova — Sotuv va Audit</b>\n\n"
+    "📺 Bu bot Dilrabo Isroilova akademiyasining rasmiy boti.\n\n"
     "📚 Platforma orqali siz:\n"
-    "• Bo'limlar bo'yicha darsliklar ko'rishingiz\n"
+    "• Sotuv va audit bo'yicha video darslar ko'rishingiz\n"
     "• Yangi darsliklar haqida bildirishnoma olishingiz\n"
-    "• Biznes va shaxsiy o'sish bo'yicha bilim olishingiz mumkin\n\n"
-    "🔄 Versiya: 3.0\n"
+    "• Real biznes tajribasidan bilim olishingiz mumkin\n\n"
+    "🔄 Versiya: 1.0\n"
     "👨‍💻 Ishlab chiquvchi: @developerCC"
 )
 

@@ -6,6 +6,7 @@ import BannerCarousel from '../components/BannerCarousel.jsx'
 import SectionCard from '../components/SectionCard.jsx'
 import { EmptyState } from '../components/States.jsx'
 import { HomeSkeleton } from '../components/Skeletons.jsx'
+import { SubscriptionBanner } from '../components/Paywall.jsx'
 import { api } from '../api/client.js'
 import { haptic, shareReferral } from '../hooks/useTelegram.js'
 
@@ -27,7 +28,7 @@ export default function Home() {
 
   return (
     <>
-      <PageHeader title="Prisma" />
+      <PageHeader title="Sotuv va Audit" />
       <div className="page">
         {error && <EmptyState title="Xatolik yuz berdi" text={error} />}
         {!data && !error && <HomeSkeleton />}
@@ -45,6 +46,8 @@ export default function Home() {
         {data && (
           <>
             <BannerCarousel banners={data.banners} />
+
+            <SubscriptionBanner subscription={data.subscription} />
 
             <div
               className="invite-card"

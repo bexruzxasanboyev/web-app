@@ -3,13 +3,15 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.deps import get_current_user
+from app.api.deps import fetch_minds_user, get_current_user, require_subscription
 from app.api.schemas import (
     ProfileOut,
     RecentLessonOut,
     ReferredFriendOut,
+    SubscriptionOut,
     UserOut,
 )
+from app.services.minds import is_subscription_active, parse_deadline
 from app.core.database import get_session
 from app.models.engagement import LessonView, Referral
 from app.models.lesson import Lesson
@@ -38,17 +40,25 @@ async def get_profile(
             )
         )
     ).scalar_one()
+    minds_user = await fetch_minds_user(user.telegram_id)
+    deadline_raw = minds_user.get("deadline") if isinstance(minds_user, dict) else None
+    deadline = parse_deadline(deadline_raw)
+    subscription = SubscriptionOut(
+        is_active=is_subscription_active(deadline_raw) or user.is_admin,
+        deadline=deadline.isoformat() if deadline else None,
+    )
     return ProfileOut(
         user=UserOut.model_validate(user),
         recent_count=int(recent_count),
         referral_count=int(referral_count),
         referral_link=build_referral_link(user.telegram_id),
+        subscription=subscription,
     )
 
 
 @router.get("/recent", response_model=list[RecentLessonOut])
 async def get_recent(
-    user: User = Depends(get_current_user),
+    user: User = Depends(require_subscription),
     session: AsyncSession = Depends(get_session),
 ) -> list[RecentLessonOut]:
     rows = (

@@ -22,9 +22,9 @@ const MOODS = {
 
 const SECTION_CONFIG = {
   'Jonli efir':            { Icon: Radio,         mood: 'amber' },
-  'Prisma sotuv':          { Icon: TrendingUp,    mood: 'warm'  },
-  'Prisma marketing':      { Icon: Megaphone,     mood: 'amber' },
-  'Prisma tizim':          { Icon: Workflow,      mood: 'cool'  },
+  'Sotuv darslari':        { Icon: TrendingUp,    mood: 'warm'  },
+  Marketing:               { Icon: Megaphone,     mood: 'amber' },
+  'Biznes audit':          { Icon: Workflow,      mood: 'cool'  },
   'Shogirdlik kurslari':   { Icon: GraduationCap, mood: 'warm'  },
   "Biznes g'oyalar":       { Icon: Lightbulb,     mood: 'amber' },
   'Shaxsiy rivojlanish':   { Icon: Sparkles,      mood: 'warm'  },

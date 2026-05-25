@@ -5,6 +5,7 @@ import PageHeader from '../components/PageHeader.jsx'
 import LessonCard from '../components/LessonCard.jsx'
 import { EmptyState } from '../components/States.jsx'
 import { LessonListSkeleton } from '../components/Skeletons.jsx'
+import Paywall from '../components/Paywall.jsx'
 import { api } from '../api/client.js'
 
 export default function Search() {
@@ -12,6 +13,7 @@ export default function Search() {
   const [query, setQuery] = useState(params.get('q') || '')
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
+  const [locked, setLocked] = useState(false)
 
   useEffect(() => {
     const q = (params.get('q') || '').trim()
@@ -20,10 +22,14 @@ export default function Search() {
       return
     }
     setLoading(true)
+    setLocked(false)
     api
       .search(q)
       .then(setResults)
-      .catch(() => setResults([]))
+      .catch((e) => {
+        if (e.paymentRequired) setLocked(true)
+        else setResults([])
+      })
       .finally(() => setLoading(false))
   }, [params])
 
@@ -47,15 +53,21 @@ export default function Search() {
           />
         </form>
 
-        {loading && <LessonListSkeleton count={3} />}
-        {!loading && results.length === 0 && (
+        {locked && (
+          <Paywall
+            title="Qidiruv — obuna ostida"
+            text="Obuna sotib oling va barcha darsliklarni qidiring."
+          />
+        )}
+        {!locked && loading && <LessonListSkeleton count={3} />}
+        {!locked && !loading && results.length === 0 && (
           <EmptyState
             icon={SearchX}
             title="Hech narsa topilmadi"
             text="Boshqa kalit so'z bilan urinib ko'ring."
           />
         )}
-        {!loading &&
+        {!locked && !loading &&
           results.map((lesson) => (
             <LessonCard key={lesson.id} lesson={lesson} />
           ))}

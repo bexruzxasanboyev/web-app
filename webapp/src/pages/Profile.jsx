@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ChevronRight, Clock, Users } from 'lucide-react'
+import { CheckCircle2, ChevronRight, Clock, Lock, Users } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
 import { ProfileSkeleton } from '../components/Skeletons.jsx'
 import { api } from '../api/client.js'
 import { getTgUser } from '../hooks/useTelegram.js'
+
+function formatDate(iso) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return iso
+  return d.toLocaleDateString('uz-UZ', { day: '2-digit', month: 'long', year: 'numeric' })
+}
 
 export default function Profile() {
   const [data, setData] = useState(null)
@@ -35,6 +42,30 @@ export default function Profile() {
         {!data && <ProfileSkeleton />}
         {data && (
           <>
+            <button
+              className={
+                'sub-banner' + (data.subscription?.is_active ? ' active' : '')
+              }
+              onClick={() => navigate('/payment')}
+            >
+              <span className="sb-icon">
+                {data.subscription?.is_active
+                  ? <CheckCircle2 size={20} />
+                  : <Lock size={20} />}
+              </span>
+              <span className="sb-text">
+                <span className="sb-title">
+                  {data.subscription?.is_active ? 'Obuna faol' : 'Obuna sotib olish'}
+                </span>
+                <span className="sb-sub">
+                  {data.subscription?.is_active && data.subscription?.deadline
+                    ? `${formatDate(data.subscription.deadline)} gacha`
+                    : "Darsliklarga to'liq kirish uchun"}
+                </span>
+              </span>
+              <ChevronRight size={18} />
+            </button>
+
             <div className="profile-card" onClick={() => navigate('/recent')}>
               <span className="pc-icon">
                 <Clock size={22} />

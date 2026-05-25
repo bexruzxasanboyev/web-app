@@ -6,6 +6,14 @@ function getInitData() {
   return window.Telegram?.WebApp?.initData || ''
 }
 
+export class ApiError extends Error {
+  constructor(message, { status, paymentRequired = false } = {}) {
+    super(message)
+    this.status = status
+    this.paymentRequired = paymentRequired
+  }
+}
+
 async function request(path, options = {}) {
   const response = await fetch(`${API_BASE}${path}`, {
     ...options,
@@ -24,7 +32,10 @@ async function request(path, options = {}) {
     } catch {
       // javob JSON emas
     }
-    throw new Error(detail || `Xatolik (${response.status})`)
+    throw new ApiError(detail || `Xatolik (${response.status})`, {
+      status: response.status,
+      paymentRequired: response.status === 402,
+    })
   }
 
   if (response.status === 204) return null
@@ -44,4 +55,11 @@ export const api = {
   getRecent: () => request('/profile/recent'),
   getReferrals: () => request('/profile/referrals'),
   getMe: () => request('/users/me'),
+
+  // To'lov / Obuna
+  getPaymentStatus: () => request('/payment/status'),
+  addCard: (data) =>
+    request('/payment/card/add', { method: 'POST', body: JSON.stringify(data) }),
+  confirmCard: (data) =>
+    request('/payment/card/confirm', { method: 'POST', body: JSON.stringify(data) }),
 }
