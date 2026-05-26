@@ -6,7 +6,7 @@ import { EmptyState } from '../components/States.jsx'
 import { LessonDetailSkeleton } from '../components/Skeletons.jsx'
 import Paywall from '../components/Paywall.jsx'
 import { api } from '../api/client.js'
-import { formatDate } from '../utils.js'
+import { addRecentLesson, formatDate } from '../utils.js'
 import { haptic, openLink } from '../hooks/useTelegram.js'
 
 const MENTOR_DEFAULT = 'Dilrabo Isroilova'
@@ -28,6 +28,7 @@ export default function LessonDetail() {
       .then((data) => {
         setLesson(data)
         setSaved(data.is_saved)
+        addRecentLesson(data)
       })
       .catch((e) => {
         if (e.paymentRequired) setLocked(true)

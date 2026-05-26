@@ -42,6 +42,34 @@ export function formatMoney(value) {
   return new Intl.NumberFormat('uz-UZ').format(num) + " so'm"
 }
 
+// === Ohirgi ko'rilgan darsliklar (localStorage) ===
+const RECENT_KEY = 'recent_lessons'
+const RECENT_MAX = 30
+
+export function addRecentLesson(lesson) {
+  if (!lesson?.id) return
+  try {
+    const raw = localStorage.getItem(RECENT_KEY)
+    const list = raw ? JSON.parse(raw) : []
+    const filtered = list.filter((l) => l.id !== lesson.id)
+    filtered.unshift({
+      id: lesson.id,
+      title: lesson.title,
+      image_url: lesson.image_url || null,
+      section_title: lesson.section_title || '',
+      viewed_at: new Date().toISOString(),
+    })
+    localStorage.setItem(RECENT_KEY, JSON.stringify(filtered.slice(0, RECENT_MAX)))
+  } catch { /* localStorage to'lib qolgan */ }
+}
+
+export function getRecentLessons() {
+  try {
+    const raw = localStorage.getItem(RECENT_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch { return [] }
+}
+
 export function formatDateTime(iso) {
   if (!iso) return '-'
   const d = new Date(iso)

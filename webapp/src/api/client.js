@@ -3,6 +3,7 @@
 // Eski sahifalarning kutgan shape'larini saqlash uchun javoblarni adaptatsiya qiladi.
 import { payApi } from './payClient.js'
 import { getTgUser } from '../hooks/useTelegram.js'
+import { getRecentLessons } from '../utils.js'
 
 const API_URL = 'https://minds.abdulvahob-blog.uz'
 const TOKEN_KEY = 'pay_api_token'
@@ -254,11 +255,11 @@ export const api = {
   getProfile: async () => {
     const sub = await getSubscription()
     const userId = getCurrentUserId()
-    let recent_count = 0
-    if (userId && sub.is_active) {
+    let referral_count = 0
+    if (userId) {
       try {
-        const r = await request('GET', `/saved/?user_id=${userId}&limit=100`)
-        recent_count = r?.data?.length || 0
+        const r = await request('GET', `/referral/?user_id=${userId}&limit=100`)
+        referral_count = r?.data?.length || 0
       } catch { /* ok */ }
     }
     const tgUser = getTgUser()
@@ -269,13 +270,39 @@ export const api = {
         username: tgUser?.username || '',
       },
       subscription: sub,
-      recent_count,
-      referral_count: 0,
+      recent_count: getRecentLessons().length,
+      referral_count,
     }
   },
 
-  getRecent: async () => [],
-  getReferrals: async () => [],
+  getRecent: async () => getRecentLessons(),
+
+  getReferrals: async () => {
+    const userId = getCurrentUserId()
+    if (!userId) return []
+    let items = []
+    try {
+      const r = await request('GET', `/referral/?user_id=${userId}&limit=100`)
+      items = r?.data || []
+    } catch { return [] }
+    // Har bir referral uchun do'st nomini olishga harakat qilamiz
+    const enriched = await Promise.all(
+      items.map(async (ref) => {
+        let name = null
+        try {
+          const u = await payApi.getUser(ref.client_id)
+          name = u?.name
+        } catch { /* ok */ }
+        return {
+          id: ref.id,
+          first_name: name || `ID: ${ref.client_id}`,
+          username: null,
+          created_at: ref.created_at,
+        }
+      })
+    )
+    return enriched
+  },
   getMe: async () => {
     const userId = getCurrentUserId()
     if (!userId) return null
