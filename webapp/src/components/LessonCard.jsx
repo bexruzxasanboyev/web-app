@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { ChevronRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
@@ -7,11 +8,14 @@ export default function LessonCard({ lesson, index = 0 }) {
   const navigate = useNavigate()
   const mentor = lesson.mentor || MENTOR_DEFAULT
   const num = lesson.position || index + 1
+  const [imgFailed, setImgFailed] = useState(false)
 
   return (
     <div className="lesson-row" onClick={() => navigate(`/lessons/${lesson.id}`)}>
       <div className="lr-thumb">
-        {lesson.image_url && <img src={lesson.image_url} alt="" />}
+        {lesson.image_url && !imgFailed && (
+          <img src={lesson.image_url} alt="" onError={() => setImgFailed(true)} />
+        )}
         <span className="lr-shimmer" aria-hidden="true" />
         <svg className="lr-diamond" viewBox="0 0 24 28" aria-hidden="true">
           <defs>

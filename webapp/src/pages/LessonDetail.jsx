@@ -18,11 +18,13 @@ export default function LessonDetail() {
   const [locked, setLocked] = useState(false)
   const [saved, setSaved] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [imgFailed, setImgFailed] = useState(false)
 
   useEffect(() => {
     setLesson(null)
     setError(null)
     setLocked(false)
+    setImgFailed(false)
     api
       .getLesson(id)
       .then((data) => {
@@ -74,8 +76,12 @@ export default function LessonDetail() {
         {lesson && (
           <>
             <div className="dl-hero">
-              {lesson.image_url ? (
-                <img src={lesson.image_url} alt="" />
+              {lesson.image_url && !imgFailed ? (
+                <img
+                  src={lesson.image_url}
+                  alt=""
+                  onError={() => setImgFailed(true)}
+                />
               ) : (
                 <div className="dl-hero-placeholder">
                   <svg viewBox="0 0 120 130" className="dl-hero-diamond">

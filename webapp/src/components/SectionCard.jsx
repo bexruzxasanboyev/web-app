@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Radio,
@@ -39,6 +40,7 @@ export default function SectionCard({ section, index = 0 }) {
   const navigate = useNavigate()
   const { Icon, mood } = SECTION_CONFIG[section.title] || DEFAULT_CONFIG
   const { accent, deep } = MOODS[mood]
+  const [imgFailed, setImgFailed] = useState(false)
 
   return (
     <div
@@ -50,7 +52,14 @@ export default function SectionCard({ section, index = 0 }) {
       }}
       onClick={() => navigate(`/sections/${section.id}`)}
     >
-      {section.image_url && <img src={section.image_url} alt="" className="sc-bg" />}
+      {section.image_url && !imgFailed && (
+        <img
+          src={section.image_url}
+          alt=""
+          className="sc-bg"
+          onError={() => setImgFailed(true)}
+        />
+      )}
       <span className="sc-glow" aria-hidden="true" />
       <span className="sc-shimmer" aria-hidden="true" />
 
