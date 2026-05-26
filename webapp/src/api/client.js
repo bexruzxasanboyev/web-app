@@ -78,6 +78,12 @@ function getCurrentUserId() {
   return saved ? Number(saved) : null
 }
 
+// Telegram bot deep-link orqali taklif havolasi
+const BOT_USERNAME = 'DilraboIsrailovaBot'
+export function buildReferralLink(userId) {
+  return `https://t.me/${BOT_USERNAME}?start=ref${userId}`
+}
+
 let subCache = null
 let subTime = 0
 const SUB_TTL = 60 * 1000
@@ -124,10 +130,11 @@ export const api = {
       title: t.name,
       lesson_count: t.video_count || 0,
     }))
+    const userId = getCurrentUserId()
     return {
       banners: [],
       subscription: sub,
-      referral_link: null,
+      referral_link: userId ? buildReferralLink(userId) : null,
       section_count: sections.length,
       sections,
     }
