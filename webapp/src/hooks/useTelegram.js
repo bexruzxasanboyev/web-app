@@ -21,6 +21,10 @@ export function getTgUser() {
   return tg?.initDataUnsafe?.user || null
 }
 
+export function getStartParam() {
+  return tg?.initDataUnsafe?.start_param || null
+}
+
 export function isInTelegram() {
   return Boolean(tg?.initData)
 }

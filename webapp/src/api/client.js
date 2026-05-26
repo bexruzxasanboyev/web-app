@@ -2,7 +2,7 @@
 // Backend'siz to'g'ridan-to'g'ri minds.abdulvahob-blog.uz ga ulanadi.
 // Eski sahifalarning kutgan shape'larini saqlash uchun javoblarni adaptatsiya qiladi.
 import { payApi } from './payClient.js'
-import { getTgUser } from '../hooks/useTelegram.js'
+import { getStartParam, getTgUser } from '../hooks/useTelegram.js'
 import { getRecentLessons } from '../utils.js'
 
 const API_URL = 'https://minds.abdulvahob-blog.uz'
@@ -82,6 +82,36 @@ function getCurrentUserId() {
 const BOT_USERNAME = 'DilraboIsrailovaBot'
 export function buildReferralLink(userId) {
   return `https://t.me/${BOT_USERNAME}?start=ref${userId}`
+}
+
+// Telegram start_param dan referral'ni avtomatik ro'yxatga olish
+// Bot referral'ni ro'yxatga olmasa, webapp shu zahoti yozib qo'yadi
+const REF_PROCESSED_KEY = 'ref_processed'
+export async function processReferralFromStartParam() {
+  const startParam = getStartParam()
+  if (!startParam || !startParam.startsWith('ref')) return
+  const inviterId = Number(startParam.slice(3))
+  if (!inviterId || Number.isNaN(inviterId)) return
+
+  const clientId = getCurrentUserId()
+  if (!clientId || clientId === inviterId) return
+
+  const key = `${REF_PROCESSED_KEY}_${clientId}`
+  if (localStorage.getItem(key)) return
+
+  try {
+    // Bu user uchun avvalroq referral yozilganmi?
+    const existing = await request('GET', `/referral/?user_id=${inviterId}&limit=200`)
+    const already = (existing?.data || []).some((r) => r.client_id === clientId)
+    if (!already) {
+      await request('POST', '/referral/add', {
+        body: { user_id: inviterId, client_id: clientId },
+      })
+    }
+    localStorage.setItem(key, '1')
+  } catch (e) {
+    console.warn('Referral ro\'yxatga olishda xatolik:', e?.message)
+  }
 }
 
 let subCache = null
