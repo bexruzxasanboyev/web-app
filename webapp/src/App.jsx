@@ -13,7 +13,6 @@ import Referrals from './pages/Referrals.jsx'
 import Payment from './pages/Payment.jsx'
 import PaymentPlan from './pages/PaymentPlan.jsx'
 import PaymentConfirm from './pages/PaymentConfirm.jsx'
-
 // Faqat raqamli ID'larni pay sahifalariga o'tkazadi (static route'lar bilan to'qnashmasin)
 function NumericRoute({ paramName = 'user_id', children }) {
   const params = useParams()
@@ -21,7 +20,6 @@ function NumericRoute({ paramName = 'user_id', children }) {
   if (!/^\d+$/.test(value || '')) return <Navigate to="/" replace />
   return children
 }
-
 export default function App() {
   return (
     <Routes>
@@ -37,7 +35,6 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/recent" element={<RecentLessons />} />
         <Route path="/referrals" element={<Referrals />} />
-
         {/* To'lov (minds API ga to'g'ridan-to'g'ri) */}
         <Route path="/payment" element={<Payment />} />
         <Route path="/:user_id" element={<NumericRoute><Payment /></NumericRoute>} />
@@ -46,7 +43,6 @@ export default function App() {
           path="/:user_id/confirm/:transaction_id/:month_id"
           element={<NumericRoute><PaymentConfirm /></NumericRoute>}
         />
-
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
