@@ -4,18 +4,18 @@ import PageHeader from '../components/PageHeader.jsx'
 const ROWS = [
   {
     icon: Layers,
-    title: 'Akademiya nima?',
-    desc: 'Sotuv, marketing va biznes audit bo\'yicha amaliy kurslar',
+    title: 'Impuls nima?',
+    desc: "Energiya, ichki menni topish, munosabatlar, boylik qonunlari bo'yicha amaliy darslar",
   },
   {
     icon: BookOpen,
     title: 'Darsliklar',
-    desc: 'Video darslar va real biznes case\'lar',
+    desc: "Video darslar, praktikalar, meditatsiya, audio darsliklar, audio chatlar, kitoblar, kinoterapiya, testlar va matnli darslar",
   },
   {
     icon: Target,
     title: 'Maqsad',
-    desc: 'Sotuvni o\'sishi va biznesni tartibga keltirish',
+    desc: "Insonlarni o'zini anglaydigan, qadrlaydigan va hayotini boshqara oladigan inson darajasiga olib chiqish",
   },
 ]
 
